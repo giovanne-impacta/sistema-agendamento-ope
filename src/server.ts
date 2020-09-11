@@ -1,0 +1,18 @@
+import express from 'express';
+import cors from 'cors'
+import bodyParser  from 'body-parser'
+
+import { routes }  from './routes'
+
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', './src/views')
+app.use(express.static('public'));
+app.use(cors())
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(routes)
+
+app.listen(process.env.PORT || 3333)
+
+export default app
