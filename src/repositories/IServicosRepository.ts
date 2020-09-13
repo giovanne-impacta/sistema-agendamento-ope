@@ -1,9 +1,9 @@
-import { Servicos } from "../domain/models/Servicos";
+import { Servico } from "../domain/models/Servico";
 
 export interface IServicosRepository {
-    getServices(): Promise<Servicos[]>;
-    getServiceById(id: string): Promise<Servicos>;
-    create(servico: Servicos): Promise<void>;
-    update(servico: Servicos, id: string): Promise<void>;
+    getServices(): Promise<Servico[]>;
+    getServiceById(id: string): Promise<Servico>;
+    create(servico: Servico): Promise<void>;
+    update(servico: Servico, id: string): Promise<void>;
     delete(id: string): Promise<void>;
 }

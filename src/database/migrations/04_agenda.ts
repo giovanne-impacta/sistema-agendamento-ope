@@ -5,8 +5,9 @@ export async function up(knex: Knex): Promise<any> {
     return knex.schema.createTable('agenda', table => {
         table.increments('id').primary();
         table.uuid('entityId').notNullable();
-        table.integer('idFuncionario').unsigned().references('id').inTable('funcionarios')
-        table.integer('idCliente').unsigned().references('id').inTable('clientes')
+        table.dateTime('data').notNullable();
+        table.integer('employeeId').unsigned().references('id').inTable('funcionarios')
+        table.integer('customerId').unsigned().references('id').inTable('clientes')
     })
 }
 

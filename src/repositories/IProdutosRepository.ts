@@ -1,9 +1,9 @@
-import { Produtos } from "../domain/models/Produtos";
+import { Produto } from "../domain/models/Produto";
 
 export interface IProdutosRepository {
-    getProdutos(): Promise<Produtos[]>;
-    getProdutosById(id: string): Promise<Produtos>;
-    create(produto: Produtos): Promise<void>;
-    update(produtos: Produtos, id: string): Promise<void>;
+    getProdutos(): Promise<Produto[]>;
+    getProdutosById(id: string): Promise<Produto>;
+    create(produto: Produto): Promise<void>;
+    update(produtos: Produto, id: string): Promise<void>;
     delete(id: string): Promise<void>;
 }

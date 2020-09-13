@@ -1,6 +1,6 @@
 import { IServicosRepository } from '../repositories/IServicosRepository'
 import { ICreateServicoRequestDTO } from '../domain/DTO/ServicosDTO';
-import { Servicos } from '../domain/models/Servicos';
+import { Servico } from '../domain/models/Servico';
 
 export class ServicosService {
     
@@ -10,19 +10,19 @@ export class ServicosService {
 
     async createService(serviceData: ICreateServicoRequestDTO) {
 
-        const servico = new Servicos(serviceData);
+        const servico = new Servico(serviceData);
 
         await this.servicosRepository.create(servico);
     }
 
     async getAllServices() {
-        const servicos: Servicos[] = await this.servicosRepository.getServices()
+        const servicos: Servico[] = await this.servicosRepository.getServices()
 
         return servicos
     }
 
     async getServiceById(id: string) {
-        const servico: Servicos = await this.servicosRepository.getServiceById(id)
+        const servico: Servico = await this.servicosRepository.getServiceById(id)
 
         return servico
     }
@@ -32,7 +32,7 @@ export class ServicosService {
 
         if (!serviceAlreadyExists) throw new Error('Serviço não encontrado.');
 
-        const servico = new Servicos(serviceData);
+        const servico = new Servico(serviceData);
 
         await this.servicosRepository.update(servico, id);
     }

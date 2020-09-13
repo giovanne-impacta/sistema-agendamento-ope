@@ -1,28 +1,28 @@
-import { Produtos } from '../../domain/models/Produtos'
+import { Produto } from '../../domain/models/Produto'
 import knex from '../../database/connection';
 import { IProdutosRepository } from '../IProdutosRepository';
 
 export class ProdutosRepository implements IProdutosRepository {
 
-    async getProdutos(): Promise<Produtos[]> {
-        const produtos : Produtos[] = await knex('produtos')
+    async getProdutos(): Promise<Produto[]> {
+        const produtos : Produto[] = await knex('produtos')
 
         return produtos
     }
 
-    async getProdutosById(id: string): Promise<Produtos> {
-        const produto : Produtos = await knex('produtos').where('entityId', id).first()
+    async getProdutosById(id: string): Promise<Produto> {
+        const produto : Produto = await knex('produtos').where('entityId', id).first()
 
         return produto
     }
 
-    async create(produto: Produtos): Promise<void> {
+    async create(produto: Produto): Promise<void> {
 
         await knex('produtos').insert(produto)
 
     }
 
-    async update(produto: Produtos, id: string): Promise<void> {
+    async update(produto: Produto, id: string): Promise<void> {
 
         await knex('produtos').where('entityId', id).update({
             description: produto.description,

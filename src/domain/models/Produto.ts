@@ -1,7 +1,7 @@
 import uuid from 'uuid-random';
 import knex from '../../database/connection';
 
-export class Produtos {
+export class Produto {
     public readonly id!: number;
 
     public readonly entityId!: string;
@@ -10,7 +10,7 @@ export class Produtos {
     public value: number;
     public readonly createdDate!: string;
 
-    constructor(props: Omit<Produtos, 'id' | 'entityId' | 'createdDate'>, entityId?: string, createdDate?: string) {
+    constructor(props: Omit<Produto, 'id' | 'entityId' | 'createdDate'>, entityId?: string, createdDate?: string) {
 
         this.description = props.description;
         this.quantity = props.quantity;
