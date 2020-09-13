@@ -1,4 +1,5 @@
 import { Agenda } from '../../domain/models/Agenda'
+import { ICreateAgendaRequestDTO } from '../../domain/DTO/AgendaDTO'
 import knex from '../../database/connection';
 import { IAgendaRepository } from '../IAgendaRepository';
 
@@ -16,7 +17,7 @@ export class AgendaRepository implements IAgendaRepository {
         return agenda
     }
 
-    async create(agenda: Agenda): Promise<void> {
+    async create(agenda: ICreateAgendaRequestDTO): Promise<void> {
         
         var customer = await knex('clientes').where('entityId', agenda.customerId).first()
         var employee = await knex('funcionarios').where('entityId', agenda.employeeId).first()
@@ -29,7 +30,7 @@ export class AgendaRepository implements IAgendaRepository {
 
     }
 
-    async update(agenda: Agenda, id: string): Promise<void> {
+    async update(agenda: ICreateAgendaRequestDTO, id: string): Promise<void> {
 
         await knex('clientes').where('entityId', id).update({
             data: agenda.data,
