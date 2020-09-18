@@ -5,4 +5,6 @@ export interface ICreateFuncionarioRequestDTO {
     phone: number;
     login: string;
     password: string;
+    starts: string;
+    ends: string;
 }

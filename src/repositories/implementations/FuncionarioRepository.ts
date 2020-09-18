@@ -16,19 +16,21 @@ export class FuncionarioRepository implements IFuncionarioRepository {
         return funcionario
     }
 
-    async create(cliente: Funcionario): Promise<void> {
+    async create(funcionario: Funcionario): Promise<void> {
 
-        await knex('funcionarios').insert(cliente)
+        await knex('funcionarios').insert(funcionario)
 
     }
 
-    async update(cliente: Funcionario, id: string): Promise<void> {
+    async update(funcionario: Funcionario, id: string): Promise<void> {
 
         await knex('funcionarios').where('entityId', id).update({
-            name: cliente.name,
-            phone: cliente.phone,
-            login: cliente.login,
-            password: cliente.password
+            name: funcionario.name,
+            phone: funcionario.phone,
+            login: funcionario.login,
+            password: funcionario.password,
+            starts: funcionario.starts,
+            ends: funcionario.ends
         })
     }
 

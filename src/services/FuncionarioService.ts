@@ -10,6 +10,11 @@ export class FuncionarioService {
 
     async create(funcionarioData: ICreateFuncionarioRequestDTO) {
 
+        var starts = new Date(parseInt(funcionarioData.starts)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        var ends = new Date(parseInt(funcionarioData.ends)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+
+        funcionarioData.starts = starts
+        funcionarioData.ends = ends
         const funcionario = new Funcionario(funcionarioData);
 
         await this.funcionarioRepository.create(funcionario);

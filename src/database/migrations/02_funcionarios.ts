@@ -9,6 +9,8 @@ export async function up(knex: Knex): Promise<any> {
         table.string('phone', 11).notNullable();
         table.string('login', 10).notNullable();
         table.string('password').notNullable();
+        table.dateTime('starts').notNullable();
+        table.dateTime('ends').notNullable();
     })
 }
 

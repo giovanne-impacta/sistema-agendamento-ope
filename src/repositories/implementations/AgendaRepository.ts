@@ -17,17 +17,10 @@ export class AgendaRepository implements IAgendaRepository {
         return agenda
     }
 
-    async create(agenda: ICreateAgendaRequestDTO): Promise<void> {
+    async create(agenda: Agenda): Promise<void> {
+
+        await knex('agenda').insert(agenda)
         
-        var customer = await knex('clientes').where('entityId', agenda.customerId).first()
-        var employee = await knex('funcionarios').where('entityId', agenda.employeeId).first()
-
-        await knex('agenda').insert({
-            data: agenda.data,
-            customerId: customer.id,
-            employeeId: employee.id
-        })
-
     }
 
     async update(agenda: ICreateAgendaRequestDTO, id: string): Promise<void> {

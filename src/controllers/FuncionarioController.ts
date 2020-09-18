@@ -29,9 +29,9 @@ export class FuncionarioController {
 
     async create (request: Request, response: Response): Promise<Response> {
         try {
-            const { name, phone, login, password } = request.body
+            const { name, phone, login, password, starts, ends } = request.body
             
-            await this.funcionarioService.create({ name, phone, login, password })
+            await this.funcionarioService.create({ name, phone, login, password, starts, ends })
             response.redirect('/clientes')
             return response.status(200).send()
 
@@ -72,9 +72,9 @@ export class FuncionarioController {
     async update (request: Request, response: Response): Promise<Response> {
         try {
             const { id } = request.params
-            const { name, phone, login, password } = request.body
+            const { name, phone, login, password, starts, ends } = request.body
 
-            await this.funcionarioService.update({ name, phone, login, password }, id)
+            await this.funcionarioService.update({ name, phone, login, password, starts, ends }, id)
 
             response.redirect('/clientes')
             return response.status(200).send()

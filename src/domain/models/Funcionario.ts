@@ -9,6 +9,8 @@ export class Funcionario {
     public phone: number;
     public login: string;
     public password: string;
+    public starts: string;
+    public ends: string;
 
     constructor(props: Omit<Funcionario, 'id' | 'entityId'>, entityId?: string) {
 
@@ -16,6 +18,8 @@ export class Funcionario {
         this.phone = props.phone;
         this.login = props.login;
         this.password = GenPassHash(props.password);
+        this.starts = props.starts;
+        this.ends = props.ends;
 
         if (!entityId) {
             this.entityId = uuid();

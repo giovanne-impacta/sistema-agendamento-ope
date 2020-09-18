@@ -29,8 +29,8 @@ export class AgendaController {
 
     async create (request: Request, response: Response): Promise<Response> {
         try {
-            const { data } = request.body
-            const { employeeId, customerId } = request.params
+            const { data, employeeId, customerId } = request.body
+            //const { employeeId, customerId } = request.params
             
             await this.service.create({ data, employeeId, customerId })
             response.redirect('/agenda')
