@@ -25,7 +25,7 @@ export class AgendaRepository implements IAgendaRepository {
 
     async update(agenda: ICreateAgendaRequestDTO, id: string): Promise<void> {
 
-        await knex('clientes').where('entityId', id).update({
+        await knex('agenda').where('entityId', id).update({
             data: agenda.data,
         })
     }

@@ -41,6 +41,8 @@ export class AgendaService {
         const agendaAlreadyExists = await this.agendaRepository.getById(id);
 
         if (!agendaAlreadyExists) throw new Error('item não encontrado.');
+        var newDate = new Date(parseInt(data.data)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        data.data = newDate
 
         await this.agendaRepository.update(data, id);
     }

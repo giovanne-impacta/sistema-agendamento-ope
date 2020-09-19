@@ -37,6 +37,12 @@ export class FuncionarioService {
 
         if (!clienteAlreadyExists) throw new Error('funcionario não encontrado.');
 
+        var starts = new Date(parseInt(funcionarioData.starts)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        var ends = new Date(parseInt(funcionarioData.ends)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+
+        funcionarioData.starts = starts
+        funcionarioData.ends = ends
+
         const funcionario = new Funcionario(funcionarioData);
 
         await this.funcionarioRepository.update(funcionario, id);
