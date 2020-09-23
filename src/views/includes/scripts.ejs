@@ -36,25 +36,73 @@ function deleteProduto(s_entityId) {
 
 function deleteServico(s_entityId) {
 
-if ( confirm("Deseja apagar o serviço id" + s_entityId + "?") ) {
+    if ( confirm("Deseja apagar o serviço id" + s_entityId + "?") ) {
 
-    $.ajax({
+        $.ajax({
 
-        url: "/prices/" + s_entityId,
-        type: "DELETE"
+            url: "/prices/" + s_entityId,
+            type: "DELETE"
 
-    }).done(function(data) {
+        }).done(function(data) {
 
-        alert("Serviço excluído com sucesso")
-        window.location.reload()
+            alert("Serviço excluído com sucesso")
+            window.location.reload()
 
-    }).fail(function(error) {
+        }).fail(function(error) {
 
-        alert("Houve algum erro ao apagar esse serviço. Por favor, tente novamente mais tarde.")
+            alert("Houve algum erro ao apagar esse serviço. Por favor, tente novamente mais tarde.")
 
-    })
+        })
+
+    }
 
 }
+
+function deleteFuncionario(s_entityId) {
+
+    if ( confirm("Deseja apagar o funcionário id" + s_entityId + "?") ) {
+
+        $.ajax({
+
+            url: "/employees/" + s_entityId,
+            type: "DELETE"
+
+        }).done(function(data) {
+
+            alert("Funcionário excluído com sucesso")
+            window.location.reload()
+
+        }).fail(function(error) {
+
+            alert("Houve algum erro ao apagar esse funcionário. Por favor, tente novamente mais tarde.")
+
+        })
+
+    }
+
+}
+
+function deleteCliente(s_entityId) {
+
+    if ( confirm("Deseja apagar o cliente id" + s_entityId + "?") ) {
+
+        $.ajax({
+
+            url: "/clients/" + s_entityId,
+            type: "DELETE"
+
+        }).done(function(data) {
+
+            alert("Cliente excluído com sucesso")
+            window.location.reload()
+
+        }).fail(function(error) {
+
+            alert("Houve algum erro ao apagar esse cliente. Por favor, tente novamente mais tarde.")
+
+        })
+
+    }
 
 }
 

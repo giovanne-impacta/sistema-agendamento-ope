@@ -32,7 +32,7 @@ export class FuncionarioController {
             const { name, phone, login, password, starts, ends } = request.body
             
             await this.funcionarioService.create({ name, phone, login, password, starts, ends })
-            response.redirect('/clientes')
+            response.redirect('/funcionarios')
             return response.status(200).send()
 
         } catch(err){
@@ -76,7 +76,7 @@ export class FuncionarioController {
 
             await this.funcionarioService.update({ name, phone, login, password, starts, ends }, id)
 
-            response.redirect('/clientes')
+            response.redirect('/funcionarios')
             return response.status(200).send()
 
         } catch(err){

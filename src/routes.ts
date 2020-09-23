@@ -34,11 +34,43 @@ routes.get('/novo_produto', (request, response) => {
     return response.render('novo_produto', {request: request})
 })
 
-routes.get('/editar_produto/:id', async (request, response, next) => {
+routes.get('/editar_produto/:id', async (request, response) => {
 
     const produto = await produtoControler.getInfo(request, response)
 
     return response.render('editar_produto', {request: request, produto: produto})
+})
+
+//---------------------Employees--------------------------
+routes.get('/funcionarios', (request, response) => {
+    return funcionarioController.show(request, response)
+})
+
+routes.get('/novo_funcionario', (request, response) => {
+    return response.render('novo_funcionario', {request: request})
+})
+
+routes.get('/editar_funcionario/:id', async (request, response) => {
+
+    const funcionario = await funcionarioController.getInfo(request, response)
+
+    return response.render('editar_funcionario', {request: request, funcionario: funcionario})
+})
+
+//---------------------Customers--------------------------
+routes.get('/clientes', (request, response) => {
+    return clienteController.show(request, response)
+})
+
+routes.get('/novo_cliente', (request, response) => {
+    return response.render('novo_cliente', {request: request})
+})
+
+routes.get('/editar_cliente/:id', async (request, response) => {
+
+    const cliente = await clienteController.getInfo(request, response)
+
+    return response.render('editar_cliente', {request: request, cliente: cliente})
 })
 //-----------------------------------------------------
 //

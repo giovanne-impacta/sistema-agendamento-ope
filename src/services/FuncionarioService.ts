@@ -1,6 +1,7 @@
 import { IFuncionarioRepository } from '../repositories/IFuncionarioRepository'
 import { ICreateFuncionarioRequestDTO } from '../domain/DTO/FuncionarioDTO';
 import { Funcionario } from '../domain/models/Funcionario';
+import { ConvertTime } from '../utils/ConvertingTime'
 
 export class FuncionarioService {
     
@@ -22,14 +23,19 @@ export class FuncionarioService {
 
     async getAll() {
         const funcionario: Funcionario[] = await this.funcionarioRepository.get()
-
+        funcionario.forEach(f => {
+            f.starts = ConvertTime(f.starts, true)
+            f.ends = ConvertTime(f.ends, true)
+        })
         return funcionario
     }
 
     async getById(id: string) {
-        const cliente: Funcionario = await this.funcionarioRepository.getById(id)
+        const funcionario: Funcionario = await this.funcionarioRepository.getById(id)
+        funcionario.starts = ConvertTime(funcionario.starts, false)
+        funcionario.ends = ConvertTime(funcionario.ends, false)
 
-        return cliente
+        return funcionario
     }
 
     async update(funcionarioData: ICreateFuncionarioRequestDTO, id: string) {
