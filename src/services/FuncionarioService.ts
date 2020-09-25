@@ -1,7 +1,7 @@
 import { IFuncionarioRepository } from '../repositories/IFuncionarioRepository'
 import { ICreateFuncionarioRequestDTO } from '../domain/DTO/FuncionarioDTO';
 import { Funcionario } from '../domain/models/Funcionario';
-import { ConvertTime } from '../utils/ConvertingTime'
+import { ConvertTime, GenNewDate } from '../utils/ConvertingTime'
 
 export class FuncionarioService {
     
@@ -11,8 +11,8 @@ export class FuncionarioService {
 
     async create(funcionarioData: ICreateFuncionarioRequestDTO) {
 
-        var starts = new Date(parseInt(funcionarioData.starts)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
-        var ends = new Date(parseInt(funcionarioData.ends)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        var starts = GenNewDate(funcionarioData.starts)
+        var ends = GenNewDate(funcionarioData.ends)
 
         funcionarioData.starts = starts
         funcionarioData.ends = ends
@@ -43,8 +43,8 @@ export class FuncionarioService {
 
         if (!clienteAlreadyExists) throw new Error('funcionario não encontrado.');
 
-        var starts = new Date(parseInt(funcionarioData.starts)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
-        var ends = new Date(parseInt(funcionarioData.ends)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
+        var starts = GenNewDate(funcionarioData.starts)
+        var ends = GenNewDate(funcionarioData.ends)
 
         funcionarioData.starts = starts
         funcionarioData.ends = ends

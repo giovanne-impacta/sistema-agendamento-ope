@@ -1,11 +1,23 @@
 const ConvertTime = (date: string, periodo: boolean) => {
     let d = new Date(date)
-    let pm = d.getHours() >= 12;
-    let hour12 = d.getHours() % 12;
-    if (!hour12) 
-        hour12 += 12;
-    let minute = d.getMinutes();
-    return `${hour12 < 10 ? "0" + hour12 : hour12}:${minute < 10 ? "0" + minute : minute}` + ( periodo ? ( pm ? 'pm' : 'am' ) : "" )
+    let hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours()
+    let minute = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()
+    return `${hour}:${minute}`
+    //let pm = d.getHours() >= 12;
+    //let hour12 = d.getHours() % 12;
+    //if (!hour12) 
+      //  hour12 += 12;
+    //let minute = d.getMinutes();
+    //return `${hour12 < 10 ? "0" + hour12 : hour12}:${minute < 10 ? "0" + minute : minute}` + ( periodo ? ( pm ? 'pm' : 'am' ) : "" )
 }
 
-export { ConvertTime }
+const GenNewDate = (date: string) => {
+    let d = new Date()
+    let [hours, minutes] = date.split(":")
+    d.setHours(+hours)
+    d.setMinutes(+minutes)
+
+    return new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+}
+
+export { ConvertTime, GenNewDate }
