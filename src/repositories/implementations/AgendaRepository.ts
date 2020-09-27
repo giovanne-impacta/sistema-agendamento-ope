@@ -7,12 +7,31 @@ export class AgendaRepository implements IAgendaRepository {
 
     async get(): Promise<Agenda[]> {
         const agendas : Agenda[] = await knex('agenda')
+        .select([
+            'agenda.entityId as id',
+            'agenda.data as data',
+            'clientes.entityId as customerId',
+            'funcionarios.entityId as employeeId',
+            'funcionarios.name as employeeName',
+            'clientes.name as customerName'])
+        .innerJoin('funcionarios', 'funcionarios.id', 'agenda.employeeId')
+        .innerJoin('clientes', 'clientes.id', 'agenda.customerId')
 
         return agendas
     }
 
     async getById(id: string): Promise<Agenda> {
-        const agenda : Agenda = await knex('agenda').where('entityId', id).first()
+        const agenda : Agenda = await knex('agenda')
+        .select([
+            'agenda.entityId as id',
+            'agenda.data as data',
+            'clientes.entityId as customerId',
+            'funcionarios.entityId as employeeId',
+            'funcionarios.name as employeeName',
+            'clientes.name as customerName'])
+        .innerJoin('funcionarios', 'funcionarios.id', 'agenda.employeeId')
+        .innerJoin('clientes', 'clientes.id', 'agenda.customerId')
+        .where('agenda.entityId', id).first()
 
         return agenda
     }

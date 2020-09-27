@@ -22,9 +22,3 @@ const GenToken = async (id: number, email: string) => {
 }
 
 export { GenPassHash, GenToken }
-
-
-
-
-
-export default GenToken
