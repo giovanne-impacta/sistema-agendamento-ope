@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+    <%- include('includes/head'); %>
+<body>
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <%- include('includes/header'); %>
+        <%- include('includes/ui-theme-settings'); %>
+        <div class="app-main">
+            <%- include('includes/sidebar'); %>
+            <div class="app-main__outer">
+                
+                <div class="app-main__inner">
+                    <div class="app-page-title">
+                        <div class="page-title-wrapper">
+                            <div class="page-title-heading">
+                                <div class="page-title-icon">
+                                    <i class="pe-7s-car icon-gradient bg-warm-flame">
+                                    </i>
+                                </div>
+                                <div>Agenda
+                                    <div class="page-title-subheading">Gerencie suas tarefas a partir da agenda.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-title-actions">
+                                <button type="button" data-toggle="tooltip" title="Example Tooltip" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
+                                    <i class="fa fa-star"></i>
+                                </button>
+                                <div class="d-inline-block dropdown">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn-shadow dropdown-toggle btn btn-info">
+                                        <span class="btn-icon-wrapper pr-2 opacity-7">
+                                            <i class="fa fa-business-time fa-w-20"></i>
+                                        </span>
+                                        Buttons
+                                    </button>
+                                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    <i class="nav-link-icon lnr-inbox"></i>
+                                                    <span>
+                                                        Inbox
+                                                    </span>
+                                                    <div class="ml-auto badge badge-pill badge-secondary">86</div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    <i class="nav-link-icon lnr-book"></i>
+                                                    <span>
+                                                        Book
+                                                    </span>
+                                                    <div class="ml-auto badge badge-pill badge-danger">5</div>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="javascript:void(0);" class="nav-link">
+                                                    <i class="nav-link-icon lnr-picture"></i>
+                                                    <span>
+                                                        Picture
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a disabled href="javascript:void(0);" class="nav-link disabled">
+                                                    <i class="nav-link-icon lnr-file-empty"></i>
+                                                    <span>
+                                                        File Disabled
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                        <li class="nav-item">
+                            <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
+                                <span>Basic Calendar</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1">
+                                <span>List View</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2">
+                                <span>Background Events</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div id='calendare'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div id='calendar-list'></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane tabs-animation fade" id="tab-content-2" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div id="calendar-bg-events"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('includes/scripts', {path: request.path}); %>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.2/main.min.js"></script>
+    <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+        var aAgenda = []
+
+        $.get("/agenda", function(aData) {
+
+            $.each(aData, function(k, v) {
+
+                aAgenda.push({
+                    title: v.customerName,
+                    start: '2020-10-01 12:00:00',
+                    end: '2020-10-01 14:00:00'
+                })
+
+            })
+
+            console.log(aAgenda)
+
+        })
+
+        let $calendar = $("#calendare")[0]
+
+        calendar = new FullCalendar.Calendar($calendar, {
+            locale: 'pt-br',
+            headerToolbar: {
+
+                start: "today prev,next",
+                center: "title",
+                end: "dayGridMonth,timeGridWeek,timeGridDay"
+
+            },
+            initialView: 'dayGridMonth',
+            themeSystem: "bootstrap",
+            nowIndicator: true,
+            dateClick: function(info) {
+
+                let oDate = new Date(info.dateStr)
+                
+
+                console.log('Clicked on: ' + info.dateStr);
+                console.log('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                console.log('Current view: ' + info.view.type);
+                // change the day's background color just for fun
+                // info.dayEl.style.backgroundColor = 'red';
+
+                let $modal = $("<div />", {
+
+                    class: "modal fade",
+                    tabindex: "-1",
+                    role: "dialog",
+                    "aria-labelledby": "teste",
+                    "aria-modal": "true",
+                    html: `<div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <form>
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Novo Evento - ` + oDate.toLocaleDateString() + `</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="row">
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="data" class="">Data</label>
+                                                <input type="date" name="data" id="data" placeholder="Data" class="form-control-sm form-control" value="` + info.dateStr + `" requiredi>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="status" class="">Status</label>
+                                                <select class="form-control-sm form-control" requiredi>
+                                                    <option value="">-- Selecione --</option>
+                                                    <option value="1">Confirmado</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="cor" class="">Cor</label>
+                                                <select class="form-control-sm form-control" requiredi>
+                                                    <option value="1">Padrão</option>
+                                                    <option value="2">Azul</option>
+                                                    <option value="3">Verde</option>
+                                                    <option value="4">Vermelho</option>
+                                                    <option value="5">Amarelo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <label for="cliente" class="">Cliente</label>
+                                                <select class="form-control-sm form-control" requiredi>
+                                                    <option value="">-- Selecione --</option>
+                                                    <option value="1">JooJ</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="telefone" class="">Telefone</label>
+                                                <input type="text" name="telefone" id="telefone" placeholder="Nº de Telefone" class="form-control-sm form-control" requiredi>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <br>
+
+                                    <table class="mb-0 table">
+                                        <thead>
+                                            <tr>
+                                                <th width="40%">Serviço</th>
+                                                <th width="30%">Profissional</th>
+                                                <th width="10%">Hora</th>
+                                                <th width="10%">Duração</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <select name="servico[]" class="form-control-sm form-control" requiredi>
+                                                        <option value="">-- Selecione --</option>
+                                                        <option value="1">JooJ</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="profissional[]" class="form-control-sm form-control" requiredi>
+                                                        <option value="">-- Selecione --</option>
+                                                        <option value="1">JooJ</option>
+                                                    </select>
+                                                </td>
+                                                <td><input type="time" name="hora[]" class="form-control-sm form-control" requiredi></td>
+                                                <td><input type="time" name="duracao[]" class="form-control-sm form-control" requiredi></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <br>
+
+                                    <div class="form-group">
+                                        <label for="observacoes">Observações</label>
+                                        <textarea name="observacoes" id="observacoes" class="form-control"></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+
+                            </form>
+                            
+                        </div>
+                    </div>`
+
+                }).modal("show")
+
+                $modal.find("form").submit(function(e) {
+
+                    e.preventDefault()
+
+                    let $form = $(this),
+                        oData = $form.serialize()
+
+                    $.ajax({
+
+                        url: "/agenda",
+                        type: "POST",
+                        data: oData,
+                        dataType: "JSON"
+
+                    }).done(function(oData) {
+
+                        console.log(oData)
+
+                    }).fail(function(oErr) {
+
+                        console.log(oErr)
+
+                    })
+
+                })
+
+                $modal.on('hidden.bs.modal', function (event) {
+                    
+                    this.remove()
+                    // code to run on closing
+                });
+
+            },
+            events: aAgenda
+        });
+
+        calendar.render();
+
+/*
+        $("#calendare").fullCalendar({
+    header: {
+        left: "prev,next today",
+        center: "title",
+        right: "month,basicWeek,basicDay"
+    },
+    themeSystem: "bootstrap4",
+    bootstrapFontAwesome: !0,
+    defaultDate: "2018-03-12",
+    navLinks: !0,
+    editable: !0,
+    eventLimit: !0,
+    events: [{
+        title: "All Day Event",
+        start: "2018-03-01"
+    }, {
+        title: "Long Event",
+        start: "2018-03-07",
+        end: "2018-03-10"
+    }, {
+        id: 999,
+        title: "Repeating Event",
+        start: "2018-03-09T16:00:00"
+    }, {
+        id: 999,
+        title: "Repeating Event",
+        start: "2018-03-16T16:00:00"
+    }, {
+        title: "Conference",
+        start: "2018-03-11",
+        end: "2018-03-13"
+    }, {
+        title: "Meeting",
+        start: "2018-03-12T10:30:00",
+        end: "2018-03-12T12:30:00"
+    }, {
+        title: "Lunch",
+        start: "2018-03-12T12:00:00"
+    }, {
+        title: "Meeting",
+        start: "2018-03-12T14:30:00"
+    }, {
+        title: "Happy Hour",
+        start: "2018-03-12T17:30:00"
+    }, {
+        title: "Dinner",
+        start: "2018-03-12T20:00:00"
+    }, {
+        title: "Birthday Party",
+        start: "2018-03-13T07:00:00"
+    }, {
+        title: "Click for Google",
+        url: "http://google.com/",
+        start: "2018-03-28"
+    }]
+})    */
+
+    })
+
+    </script>
+
+</body>
+
+</html>

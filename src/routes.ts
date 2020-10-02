@@ -9,6 +9,11 @@ import {
 const routes = express.Router()
 
 //                  STATIC ROUTES
+//---------------------Agendis :)--------------------------
+routes.get('/agendas', (request, response) => {
+    return agendaController.show(request, response)
+})
+
 //---------------------Services--------------------------
 routes.get('/servicos', (request, response) => {
     return servicoControler.show(request, response)
