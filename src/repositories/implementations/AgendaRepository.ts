@@ -38,7 +38,7 @@ export class AgendaRepository implements IAgendaRepository {
 
     async create(agenda: Agenda): Promise<void> {
 
-        await knex('agenda').insert(agenda)
+        return await knex('agenda').insert(agenda)
         
     }
 
