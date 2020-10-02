@@ -10,8 +10,21 @@ const routes = express.Router()
 
 //                  STATIC ROUTES
 //---------------------Agendis :)--------------------------
-routes.get('/agendas', (request, response) => {
-    return agendaController.show(request, response)
+routes.get('/agendas', async (request, response) => {
+
+    const agendas = await agendaController.getAll(request, response)
+    const clientes = await clienteController.getAll(request, response)
+    const servicos = await servicoControler.getAll(request, response)
+    const funcionarios = await funcionarioController.getAll(request, response)
+
+    return response.render('agendas', {
+        request: request,
+        agendas: agendas,
+        clientes: clientes,
+        servicos: servicos,
+        funcionarios: funcionarios
+    })
+
 })
 
 //---------------------Services--------------------------
@@ -28,6 +41,7 @@ routes.get('/editar_servico/:id', async (request, response) => {
     const servico = await servicoControler.getInfo(request, response)
 
     return response.render('editar_servico', {request: request, servico: servico})
+
 })
 
 //---------------------Products--------------------------

@@ -41,12 +41,12 @@ export class ServicosController {
         }
     }
 
-    async getAll (request: Request, response: Response): Promise<Response> {
+    async getAll (request: Request, response: Response) {
         try {
 
             const servicos = await this.servicosService.getAllServices()
 
-            return response.json(servicos)
+            return servicos
 
         } catch(err){
 

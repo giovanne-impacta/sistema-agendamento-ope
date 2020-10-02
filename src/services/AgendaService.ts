@@ -5,6 +5,7 @@ import { FuncionarioRepository } from '../repositories/implementations/Funcionar
 import { ClienteRepository } from '../repositories/implementations/ClienteRepository'
 import { ICreateAgendaRequestDTO } from '../domain/DTO/AgendaDTO';
 import { Agenda } from '../domain/models/Agenda';
+import { ConvertDateTime } from '../utils/ConvertingTime'
 
 export class AgendaService {
     private employeeRepository: IFuncionarioRepository
@@ -27,7 +28,9 @@ export class AgendaService {
 
     async getAll() {
         const agendas: Agenda[] = await this.agendaRepository.get()
-
+        agendas.forEach(f => {
+            f.data = ConvertDateTime(f.data, true)
+        })
         return agendas
     }
 

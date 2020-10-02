@@ -41,12 +41,12 @@ export class FuncionarioController {
         }
     }
 
-    async getAll (request: Request, response: Response): Promise<Response> {
+    async getAll (request: Request, response: Response) {
         try {
 
             const funcionario = await this.funcionarioService.getAll()
 
-            return response.json(funcionario)
+            return funcionario
 
         } catch(err){
 

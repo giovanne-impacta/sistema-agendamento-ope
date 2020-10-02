@@ -96,7 +96,7 @@
                         <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
                             <div class="main-card mb-3 card">
                                 <div class="card-body">
-                                    <div id='calendare'></div>
+                                    <div id='calendario'></div>
                                 </div>
                             </div>
                         </div>
@@ -130,25 +130,65 @@
 
     $(document).ready(function() {
 
-        var aAgenda = []
+        var aAgenda = [
 
-        $.get("/agenda", function(aData) {
+            <% agendas.forEach(function(data) { %>
 
-            $.each(aData, function(k, v) {
+                {
 
-                aAgenda.push({
-                    title: v.customerName,
-                    start: '2020-10-01 12:00:00',
-                    end: '2020-10-01 14:00:00'
-                })
+                    title: "<%= data.employeeName %> - <%= data.customerName %>",
+                    start: "<%= data.data %>",
+                    end: "<%= data.data %>"
 
-            })
+                },
 
-            console.log(aAgenda)
+            <% }) %>
 
-        })
+        ],
+            oClientes = {
 
-        let $calendar = $("#calendare")[0]
+            <% clientes.forEach(function(data) { %>
+
+                "<%= data.entityId %>": {
+
+                    nome: "<%= data.name %>",
+                    telefone: "<%= data.phone %>"
+
+                }
+
+            <% }) %>
+
+        },
+            oServicos = {
+
+            <% servicos.forEach(function(data) { %>
+
+                "<%= data.entityId %>": {
+
+                    descricao: "<%= data.description %>",
+                    valor: "<%= data.value %>"
+
+                }
+
+            <% }) %>
+
+        },
+            oFuncionarios = {
+
+            <% funcionarios.forEach(function(data) { %>
+
+                "<%= data.entityId %>": {
+
+                    nome: "<%= data.name %>",
+                    telefone: "<%= data.phone %>"
+
+                }
+
+            <% }) %>
+
+        }
+
+        let $calendar = $("#calendario")[0]
 
         calendar = new FullCalendar.Calendar($calendar, {
             locale: 'pt-br',
@@ -165,7 +205,6 @@
             dateClick: function(info) {
 
                 let oDate = new Date(info.dateStr)
-                
 
                 console.log('Clicked on: ' + info.dateStr);
                 console.log('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
@@ -230,9 +269,11 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="cliente" class="">Cliente</label>
-                                                <select class="form-control-sm form-control" requiredi>
+                                                <select name="cliente" class="form-control-sm form-control" requiredi>
                                                     <option value="">-- Selecione --</option>
-                                                    <option value="1">JooJ</option>
+                                                    <% clientes.forEach(function(data) { %>
+                                                    <option value="<%= data.entityId %>"><%= data.name %></option>
+                                                    <% }) %>
                                                 </select>
                                             </div>
                                         </div>
@@ -260,19 +301,23 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select name="servico[]" class="form-control-sm form-control" requiredi>
+                                                    <select name="servico" class="form-control-sm form-control" requiredi>
                                                         <option value="">-- Selecione --</option>
-                                                        <option value="1">JooJ</option>
+                                                        <% servicos.forEach(function(data) { %>
+                                                        <option value="<%= data.entityId %>"><%= data.description %></option>
+                                                        <% }) %>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="profissional[]" class="form-control-sm form-control" requiredi>
+                                                    <select name="profissional" class="form-control-sm form-control" requiredi>
                                                         <option value="">-- Selecione --</option>
-                                                        <option value="1">JooJ</option>
+                                                        <% funcionarios.forEach(function(data) { %>
+                                                        <option value="<%= data.entityId %>"><%= data.name %></option>
+                                                        <% }) %>
                                                     </select>
                                                 </td>
-                                                <td><input type="time" name="hora[]" class="form-control-sm form-control" requiredi></td>
-                                                <td><input type="time" name="duracao[]" class="form-control-sm form-control" requiredi></td>
+                                                <td><input type="time" name="hora" class="form-control-sm form-control" requiredi></td>
+                                                <td><input type="time" name="duracao" class="form-control-sm form-control" requiredi></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -302,13 +347,28 @@
                     e.preventDefault()
 
                     let $form = $(this),
-                        oData = $form.serialize()
+                        oData = $form.serializeArray(),
+                        oDataFormat = {}
+
+                    $.each(oData, function(k, v) {
+
+                        oDataFormat[v.name] = v.value
+
+                    })
+
+                    let oPostData = {
+
+                        data: new Date(oDataFormat["data"] + " " + oDataFormat["hora"] + ":00").getTime(),
+                        employeeId: oDataFormat["profissional"],
+                        customerId: oDataFormat["cliente"]
+
+                    }
 
                     $.ajax({
 
                         url: "/agenda",
                         type: "POST",
-                        data: oData,
+                        data: oPostData,
                         dataType: "JSON"
 
                     }).done(function(oData) {
@@ -319,6 +379,12 @@
 
                         console.log(oErr)
 
+                    }).always(function() {
+
+                        $modal.modal("hide")
+
+                        window.location.reload()
+
                     })
 
                 })
@@ -326,14 +392,16 @@
                 $modal.on('hidden.bs.modal', function (event) {
                     
                     this.remove()
-                    // code to run on closing
+
                 });
 
             },
             events: aAgenda
         });
 
-        calendar.render();
+        console.log(aAgenda)
+
+        calendar.render()
 
 /*
         $("#calendare").fullCalendar({

@@ -33,7 +33,7 @@ export class AgendaController {
             //const { employeeId, customerId } = request.params
             
             await this.service.create({ data, employeeId, customerId })
-            response.redirect('/agenda')
+            // response.redirect('/agenda')
             return response.status(200).send()
 
         } catch(err){
@@ -42,12 +42,12 @@ export class AgendaController {
         }
     }
 
-    async getAll (request: Request, response: Response): Promise<Response> {
+    async getAll (request: Request, response: Response){
         try {
 
             const agenda = await this.service.getAll()
 
-            return response.json(agenda)
+            return agenda
 
         } catch(err){
 

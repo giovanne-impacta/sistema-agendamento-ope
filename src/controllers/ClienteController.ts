@@ -41,12 +41,12 @@ export class ClienteController {
         }
     }
 
-    async getAll (request: Request, response: Response): Promise<Response> {
+    async getAll (request: Request, response: Response) {
         try {
 
             const clientes = await this.clienteService.getAll()
 
-            return response.json(clientes)
+            return clientes
 
         } catch(err){
 
