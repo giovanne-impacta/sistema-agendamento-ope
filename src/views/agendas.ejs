@@ -299,8 +299,8 @@
                 $.getJSON("/agenda/" + sId, function(oData) {
 
                     let oDate = new Date(oData.data),
-                        hour = oDate.getHours() < 10 ? "0" + oDate.getHours() : oDate.getHours()
-                        minute = oDate.getMinutes() < 10 ? "0" + oDate.getMinutes() : oDate.getMinutes()
+                        hour = oDate.getHours() < 10 ? "0" + oDate.getHours() : oDate.getHours(),
+                        minute = oDate.getMinutes() < 10 ? "0" + oDate.getMinutes() : oDate.getMinutes(),
                         seconds = oDate.getSeconds() < 10 ? "0" + oDate.getSeconds() : oDate.getSeconds(),
                         time = hour + ":" + minute + ":" + seconds
 
