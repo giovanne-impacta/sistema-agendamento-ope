@@ -106,4 +106,28 @@ function deleteCliente(s_entityId) {
 
 }
 
+function deleteAgenda(s_entityId) {
+
+    if ( confirm("Deseja apagar a agenda id " + s_entityId + "?") ) {
+
+        $.ajax({
+
+            url: "/agenda/" + s_entityId,
+            type: "DELETE"
+
+        }).done(function(data) {
+
+            alert("Agenda excluída com sucesso")
+            window.location.reload()
+
+        }).fail(function(error) {
+
+            alert("Houve algum erro ao apagar essa agenda. Por favor, tente novamente mais tarde.")
+
+        })
+
+    }
+
+}
+
 </script>

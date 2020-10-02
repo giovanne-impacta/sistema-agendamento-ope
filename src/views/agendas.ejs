@@ -70,7 +70,8 @@
 
                     title: "<%= data.employeeName %> - <%= data.customerName %>",
                     start: "<%= data.data %>",
-                    end: "<%= data.data %>"
+                    end: "<%= data.data %>",
+                    id: "<%= data.id %>"
 
                 },
 
@@ -289,6 +290,109 @@
                     this.remove()
 
                 });
+
+            },
+            eventClick: function(info) {
+
+                let sId = info.event.id
+
+                $.getJSON("/agenda/" + sId, function(oData) {
+
+                    let oDate = new Date(oData.data),
+                        hour = oDate.getHours() < 10 ? "0" + oDate.getHours() : oDate.getHours()
+                        minute = oDate.getMinutes() < 10 ? "0" + oDate.getMinutes() : oDate.getMinutes()
+                        seconds = oDate.getSeconds() < 10 ? "0" + oDate.getSeconds() : oDate.getSeconds(),
+                        time = hour + ":" + minute + ":" + seconds
+
+                    let $modal = $("<div />", {
+
+                        class: "modal fade",
+                        tabindex: "-1",
+                        role: "dialog",
+                        "aria-labelledby": "teste",
+                        "aria-modal": "true",
+                        html: `<div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Visualizar Evento "` + oData.employeeName + ` - ` + oData.customerName + `"</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    
+                                    <div class="row">
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <b>Data</b>
+                                                <p>` + oDate.toLocaleDateString() + `</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-sm-8">
+                                            <div class="form-group">
+                                                <b>Cliente</b>
+                                                <p>` + oData.customerName + `</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <table class="mb-0 table">
+                                        <thead>
+                                            <tr>
+                                                <th width="40%">Serviço</th>
+                                                <th width="30%">Profissional</th>
+                                                <th width="10%">Hora</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span>Progressiva</span>
+                                                </td>
+                                                <td>
+                                                    <span>` + oData.employeeName + `</span>
+                                                </td>
+                                                <td>
+                                                    <span>` + time + `</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                    
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                </div>
+                                
+                            </div>
+                        </div>`
+
+                    }).modal("show")
+
+                    let $btnExcluir = $("<button />", {
+
+                        type: "button",
+                        class: "btn btn-danger",
+                        text: "Excluir"
+                        
+                    }).click(function() {
+
+                        deleteAgenda(sId)
+
+                    }).appendTo($modal.find(".modal-footer"))
+
+                })
 
             },
             events: aAgenda
