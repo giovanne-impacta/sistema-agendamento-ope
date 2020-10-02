@@ -4,4 +4,5 @@ export interface ICreateAgendaRequestDTO {
     data: string;
     employeeId?: string;
     customerId?: string;
+    serviceId?: string;
 }
