@@ -29,7 +29,7 @@ export class AgendaService {
     async getAll() {
         const agendas: Agenda[] = await this.agendaRepository.get()
         agendas.forEach(f => {
-            f.data = ConvertDateTime(f.data, true)
+            f.data = ConvertDateTime(f.data)
         })
         return agendas
     }
