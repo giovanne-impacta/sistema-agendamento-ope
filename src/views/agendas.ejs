@@ -167,7 +167,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="data" class="">Data</label>
-                                                <input type="date" name="data" id="data" placeholder="Data" class="form-control-sm form-control" value="` + info.dateStr + `" requiredi>
+                                                <input type="date" name="data" id="data" placeholder="Data" class="form-control-sm form-control" value="` + info.dateStr + `" required>
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -183,7 +183,7 @@
                                         <div class="col-sm-8">
                                             <div class="form-group">
                                                 <label for="cliente" class="">Cliente</label>
-                                                <select name="cliente" class="form-control-sm form-control" requiredi>
+                                                <select name="cliente" class="form-control-sm form-control" required>
                                                     <option value="">-- Selecione --</option>
                                                     <% clientes.forEach(function(data) { %>
                                                     <option value="<%= data.entityId %>"><%= data.name %></option>
@@ -206,7 +206,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select name="servico" class="form-control-sm form-control" requiredi>
+                                                    <select name="servico" class="form-control-sm form-control" required>
                                                         <option value="">-- Selecione --</option>
                                                         <% servicos.forEach(function(data) { %>
                                                         <option value="<%= data.entityId %>"><%= data.description %></option>
@@ -214,14 +214,14 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select name="profissional" class="form-control-sm form-control" requiredi>
+                                                    <select name="profissional" class="form-control-sm form-control" required>
                                                         <option value="">-- Selecione --</option>
                                                         <% funcionarios.forEach(function(data) { %>
                                                         <option value="<%= data.entityId %>"><%= data.name %></option>
                                                         <% }) %>
                                                     </select>
                                                 </td>
-                                                <td><input type="time" name="hora" class="form-control-sm form-control" requiredi></td>
+                                                <td><input type="time" name="hora" class="form-control-sm form-control" required></td>
                                             </tr>
                                         </tbody>
                                     </table>
