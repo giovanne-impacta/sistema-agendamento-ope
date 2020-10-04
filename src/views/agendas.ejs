@@ -106,6 +106,19 @@
             <% }) %>
 
         },
+            oProdutos = {
+
+                <% produtos.forEach(function(data) { %>
+
+                    "<%= data.entityId %>": {
+
+                    descricao: "<%= data.description %>",
+                    valor: "<%= data.value %>"
+
+                },
+
+            <% }) %>                    
+        },
             oFuncionarios = {
 
             <% funcionarios.forEach(function(data) { %>
@@ -199,6 +212,7 @@
                                         <thead>
                                             <tr>
                                                 <th width="40%">Serviço</th>
+                                                <th width="30%">Produto</th>
                                                 <th width="30%">Profissional</th>
                                                 <th width="10%">Hora</th>
                                             </tr>
@@ -209,6 +223,14 @@
                                                     <select name="servico" class="form-control-sm form-control" required>
                                                         <option value="">-- Selecione --</option>
                                                         <% servicos.forEach(function(data) { %>
+                                                        <option value="<%= data.entityId %>"><%= data.description %></option>
+                                                        <% }) %>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="produto" class="form-control-sm form-control" required>
+                                                        <option value="">-- Selecione --</option>
+                                                        <% produtos.forEach(function(data) { %>
                                                         <option value="<%= data.entityId %>"><%= data.description %></option>
                                                         <% }) %>
                                                     </select>
@@ -258,7 +280,8 @@
                         data: new Date(oDataFormat["data"] + " " + oDataFormat["hora"] + ":00").getTime(),
                         employeeId: oDataFormat["profissional"],
                         customerId: oDataFormat["cliente"],
-                        serviceId: oDataFormat["servico"]
+                        serviceId: oDataFormat["servico"],
+                        productId: oDataFormat["produto"]
 
                     }
 
@@ -350,6 +373,7 @@
                                         <thead>
                                             <tr>
                                                 <th width="40%">Serviço</th>
+                                                <th width="40%">Produto</th>
                                                 <th width="30%">Profissional</th>
                                                 <th width="10%">Hora</th>
                                             </tr>
@@ -357,7 +381,10 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <span>Progressiva</span>
+                                                    <span>` + oData.service + `</span>
+                                                </td>
+                                                <td>
+                                                    <span>` + oData.product + `</span>
                                                 </td>
                                                 <td>
                                                     <span>` + oData.employeeName + `</span>

@@ -8,30 +8,15 @@ export class ProdutosController {
     ){}
 
     async show (request: Request, response: Response): Promise<void> {
-        const produtos = await this.produtosService.getAllProducts()
+        const produtos = await this.produtosService.getAll()
         return response.render('produtos', {request: request, produtos: produtos})
-    }
-
-    async getInfo(request: Request, response: Response){
-        try {
-
-            const { id } = request.params
-
-            const produto = await this.produtosService.getProdutosById(id)
-
-            return produto
-
-        } catch(err){
-
-            return response.status(400).json({ message: err.message })
-        }
     }
 
     async create (request: Request, response: Response): Promise<Response> {
         try {
             const { description, quantity, value } = request.body
             
-            await this.produtosService.createProduto({ description, quantity, value })
+            await this.produtosService.create({ description, quantity, value })
             response.redirect('/produtos')
             return response.status(200).send()
 
@@ -44,7 +29,7 @@ export class ProdutosController {
     async getAll (request: Request, response: Response): Promise<Response> {
         try {
 
-            const produtos = await this.produtosService.getAllProducts()
+            const produtos = await this.produtosService.getAll()
 
             return response.json(produtos)
 
@@ -59,7 +44,7 @@ export class ProdutosController {
 
             const { id } = request.params
 
-            const produto = await this.produtosService.getProdutosById(id)
+            const produto = await this.produtosService.getById(id)
 
             return response.json(produto)
 
@@ -74,7 +59,7 @@ export class ProdutosController {
             const { id } = request.params
             const { description, quantity, value } = request.body
 
-            await this.produtosService.updateProduto({ description, quantity, value}, id)
+            await this.produtosService.update({ description, quantity, value}, id)
 
             response.redirect('/produtos')
             return response.status(200).send()
@@ -88,7 +73,7 @@ export class ProdutosController {
         try {
             const { id } = request.params
 
-            await this.produtosService.deleteProduto(id)
+            await this.produtosService.delete(id)
 
             return response.status(200).send()
 

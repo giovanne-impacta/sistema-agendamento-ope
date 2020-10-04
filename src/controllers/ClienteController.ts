@@ -12,21 +12,6 @@ export class ClienteController {
         return response.render('clientes', {request: request, clientes: clientes})
     }
 
-    async getInfo(request: Request, response: Response){
-        try {
-
-            const { id } = request.params
-
-            const cliente = await this.clienteService.getById(id)
-
-            return cliente
-
-        } catch(err){
-
-            return response.status(400).json({ message: err.message })
-        }
-    }
-
     async create (request: Request, response: Response): Promise<Response> {
         try {
             const { name, phone, login, password } = request.body
@@ -41,12 +26,12 @@ export class ClienteController {
         }
     }
 
-    async getAll (request: Request, response: Response) {
+    async getAll (request: Request, response: Response): Promise<Response> {
         try {
 
             const clientes = await this.clienteService.getAll()
 
-            return clientes
+            return response.json(clientes)
 
         } catch(err){
 

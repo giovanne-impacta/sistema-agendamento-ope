@@ -8,30 +8,15 @@ export class ServicosController {
     ){}
 
     async show (request: Request, response: Response): Promise<void> {
-        const servicos = await this.servicosService.getAllServices()
+        const servicos = await this.servicosService.getAll()
         return response.render('servicos', {request: request, prices: servicos})
-    }
-
-    async getInfo(request: Request, response: Response){
-        try {
-            const { id } = request.params
-            
-            const servico = await this.servicosService.getServiceById(id)
-
-
-            return servico
-
-        } catch(err){
-
-            return response.status(400).json({ message: err.message })
-        }
     }
 
     async create (request: Request, response: Response): Promise<Response> {
         try {
             const { description, value } = request.body
 
-            await this.servicosService.createService({ description, value })
+            await this.servicosService.create({ description, value })
             response.redirect('/servicos')
             return response.status(200).send()
 
@@ -41,12 +26,12 @@ export class ServicosController {
         }
     }
 
-    async getAll (request: Request, response: Response) {
+    async getAll (request: Request, response: Response): Promise<Response> {
         try {
 
-            const servicos = await this.servicosService.getAllServices()
+            const servicos = await this.servicosService.getAll()
 
-            return servicos
+            return response.json(servicos)
 
         } catch(err){
 
@@ -58,7 +43,7 @@ export class ServicosController {
         try {
             const { id } = request.params
             
-            const servico = await this.servicosService.getServiceById(id)
+            const servico = await this.servicosService.getById(id)
 
 
             return response.json(servico)
@@ -74,7 +59,7 @@ export class ServicosController {
             const { id } = request.params
             const { description, value } = request.body
 
-            await this.servicosService.updateService({ description, value}, id)
+            await this.servicosService.update({ description, value}, id)
 
             response.redirect('/servicos')
             return response.status(200).send()
@@ -88,7 +73,7 @@ export class ServicosController {
         try {
             const { id } = request.params
 
-            await this.servicosService.deleteService(id)
+            await this.servicosService.delete(id)
 
             return response.status(200).send()
 
