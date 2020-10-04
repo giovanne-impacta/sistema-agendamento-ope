@@ -1,4 +1,4 @@
-export interface ICreateProductServiceRequestDTO {
+export interface ICreateAgendamentoRequestDTO {
     id?: number;
     entityId?: string;
     productId: number;

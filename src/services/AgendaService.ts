@@ -5,21 +5,21 @@ import { FuncionarioRepository } from '../repositories/implementations/Funcionar
 import { ClienteRepository } from '../repositories/implementations/ClienteRepository'
 import { ServicosRepository } from '../repositories/implementations/ServicosRepository'
 import { ProdutosRepository } from '../repositories/implementations/ProdutosRepository'
-import { ProductServiceRepository } from '../repositories/implementations/ProductServiceRepository'
+import { ProductServiceRepository } from '../repositories/implementations/AgendamentoRepository'
 import { ICreateAgendaRequestDTO } from '../domain/DTO/AgendaDTO';
 import { Agenda } from '../domain/models/Agenda';
-import { ProductService } from '../domain/models/ProductService'
+import { Agendamento } from '../domain/models/Agendamento'
 import { ConvertDateTime } from '../utils/ConvertingTime'
 import { IServicosRepository } from '../repositories/IServicosRepository'
 import { IProdutosRepository } from '../repositories/IProdutosRepository'
-import { IProductServiceRepository } from '../repositories/IProductServiceRepository'
+import { IAgendamentoRepository } from '../repositories/IAgendamentoRepository'
 
 export class AgendaService {
     private employeeRepository: IFuncionarioRepository
     private customerRepository: IClienteRepository
     private servicosRepository: IServicosRepository
     private productsRepository: IProdutosRepository
-    private productServiceRepository: IProductServiceRepository
+    private productServiceRepository: IAgendamentoRepository
     constructor ( 
         private agendaRepository: IAgendaRepository
     ){
@@ -41,7 +41,7 @@ export class AgendaService {
 
         var id = await this.agendaRepository.create(newAgenda);
 
-        var agendamento = new ProductService({idAgenda: id[0], idServicos: service.id, idProduto: product.id})
+        var agendamento = new Agendamento({idAgenda: id[0], idServicos: service.id, idProduto: product.id})
         await this.productServiceRepository.create(agendamento)
 
     }
