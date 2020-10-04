@@ -39,9 +39,9 @@ export class AgendaService {
         var date = new Date(parseInt(data.data)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
         var newAgenda = new Agenda({customerId: customer.id, employeeId: employee.id, data: date})
 
-        var id = await this.agendaRepository.create(newAgenda);
+        var [id] = await this.agendaRepository.create(newAgenda);
 
-        var agendamento = new Agendamento({idAgenda: id[0], idServicos: service.id, idProduto: product.id})
+        var agendamento = new Agendamento({idAgenda: id, idServicos: service.id, idProduto: product.id})
         await this.productServiceRepository.create(agendamento)
 
     }

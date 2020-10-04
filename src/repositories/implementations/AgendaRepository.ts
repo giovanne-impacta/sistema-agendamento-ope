@@ -49,7 +49,7 @@ export class AgendaRepository implements IAgendaRepository {
 
     async create(agenda: Agenda): Promise<number[]> {
 
-        return await knex('agenda').insert(agenda)
+        return await knex('agenda').returning('id').insert(agenda)
         
     }
 
