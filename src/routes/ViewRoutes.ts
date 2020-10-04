@@ -22,13 +22,15 @@ routesView.get('/agendas', async (request, response) => {
     const clientes = await clienteService.getAll()
     const servicos = await servicosService.getAll()
     const funcionarios = await funcionarioService.getAll()
+    const produtos = await produtosService.getAll()
 
     return response.render('agendas', {
         request: request,
         agendas: agendas,
         clientes: clientes,
         servicos: servicos,
-        funcionarios: funcionarios
+        funcionarios: funcionarios,
+        produtos: produtos
     })
 
 })

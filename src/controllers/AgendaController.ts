@@ -14,11 +14,10 @@ export class AgendaController {
 
     async create (request: Request, response: Response): Promise<Response> {
         try {
-            const { data, employeeId, customerId, serviceId } = request.body
-            //const { employeeId, customerId } = request.params
+            const { data, employeeId, customerId, serviceId, productId } = request.body
             
-            await this.service.create({ data, employeeId, customerId, serviceId })
-            // response.redirect('/agenda')
+            await this.service.create({ data, employeeId, customerId, serviceId, productId })
+
             return response.status(200).send()
 
         } catch(err){
