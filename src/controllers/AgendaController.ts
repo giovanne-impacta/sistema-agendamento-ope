@@ -12,21 +12,6 @@ export class AgendaController {
         return response.render('agenda', {request: request, agenda: agenda})
     }
 
-    async getInfo(request: Request, response: Response){
-        try {
-
-            const { id } = request.params
-
-            const agenda = await this.service.getById(id)
-
-            return agenda
-
-        } catch(err){
-
-            return response.status(400).json({ message: err.message })
-        }
-    }
-
     async create (request: Request, response: Response): Promise<Response> {
         try {
             const { data, employeeId, customerId, serviceId } = request.body
@@ -42,12 +27,12 @@ export class AgendaController {
         }
     }
 
-    async getAll (request: Request, response: Response){
+    async getAll (request: Request, response: Response): Promise<Response> {
         try {
 
             const agenda = await this.service.getAll()
 
-            return agenda
+            return response.json(agenda)
 
         } catch(err){
 

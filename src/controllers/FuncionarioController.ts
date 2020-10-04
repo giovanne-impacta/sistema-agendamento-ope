@@ -12,21 +12,6 @@ export class FuncionarioController {
         return response.render('funcionarios', {request: request, funcionarios: funcionarios})
     }
 
-    async getInfo(request: Request, response: Response){
-        try {
-
-            const { id } = request.params
-
-            const funcionario = await this.funcionarioService.getById(id)
-
-            return funcionario
-
-        } catch(err){
-
-            return response.status(400).json({ message: err.message })
-        }
-    }
-
     async create (request: Request, response: Response): Promise<Response> {
         try {
             const { name, phone, login, password, starts, ends } = request.body
@@ -41,12 +26,12 @@ export class FuncionarioController {
         }
     }
 
-    async getAll (request: Request, response: Response) {
+    async getAll (request: Request, response: Response): Promise<Response> {
         try {
 
             const funcionario = await this.funcionarioService.getAll()
 
-            return funcionario
+            return response.json(funcionario)
 
         } catch(err){
 

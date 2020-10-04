@@ -8,26 +8,26 @@ export class ProdutosService {
         private produtosRepository: IProdutosRepository
         ){}
 
-    async createProduto(ProdutoData: ICreateProdutoRequestDTO) {
+    async create(ProdutoData: ICreateProdutoRequestDTO) {
 
         const produto = new Produto(ProdutoData);
 
         await this.produtosRepository.create(produto);
     }
 
-    async getAllProducts() {
+    async getAll() {
         const Produtos: Produto[] = await this.produtosRepository.getProdutos()
 
         return Produtos
     }
 
-    async getProdutosById(id: string) {
+    async getById(id: string) {
         const produto: Produto = await this.produtosRepository.getProdutosById(id)
 
         return produto
     }
 
-    async updateProduto(ProdutoData: ICreateProdutoRequestDTO, id: string) {
+    async update(ProdutoData: ICreateProdutoRequestDTO, id: string) {
         const produtoAlreadyExists = await this.produtosRepository.getProdutosById(id);
 
         if (!produtoAlreadyExists) throw new Error('item não encontrado.');
@@ -37,7 +37,7 @@ export class ProdutosService {
         await this.produtosRepository.update(produto, id);
     }
 
-    async deleteProduto(id: string) {
+    async delete(id: string) {
         const produtoAlreadyExists = await this.produtosRepository.getProdutosById(id);
 
         if (!produtoAlreadyExists) throw new Error('item não encontrado.');

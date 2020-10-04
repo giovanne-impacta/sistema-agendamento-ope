@@ -6,16 +6,22 @@ import {
     funcionarioController,
     produtoControler } from '../controllers'
 
+import { agendaService,
+        clienteService,
+        funcionarioService,
+        produtosService,
+        servicosService } from '../services'
+
 const routesView = express.Router()
 
 //                  STATIC ROUTES
 //---------------------Agendis :)--------------------------
 routesView.get('/agendas', async (request, response) => {
 
-    const agendas = await agendaController.getAll(request, response)
-    const clientes = await clienteController.getAll(request, response)
-    const servicos = await servicoControler.getAll(request, response)
-    const funcionarios = await funcionarioController.getAll(request, response)
+    const agendas = await agendaService.getAll()
+    const clientes = await clienteService.getAll()
+    const servicos = await servicosService.getAll()
+    const funcionarios = await funcionarioService.getAll()
 
     return response.render('agendas', {
         request: request,
@@ -38,7 +44,8 @@ routesView.get('/novo_servico', (request, response) => {
 
 routesView.get('/editar_servico/:id', async (request, response) => {
 
-    const servico = await servicoControler.getInfo(request, response)
+    const {id} = request.params
+    const servico = await servicosService.getById(id)
 
     return response.render('editar_servico', {request: request, servico: servico})
 
@@ -55,7 +62,8 @@ routesView.get('/novo_produto', (request, response) => {
 
 routesView.get('/editar_produto/:id', async (request, response) => {
 
-    const produto = await produtoControler.getInfo(request, response)
+    const {id} = request.params
+    const produto = await produtosService.getById(id)
 
     return response.render('editar_produto', {request: request, produto: produto})
 })
@@ -71,7 +79,8 @@ routesView.get('/novo_funcionario', (request, response) => {
 
 routesView.get('/editar_funcionario/:id', async (request, response) => {
 
-    const funcionario = await funcionarioController.getInfo(request, response)
+    const {id} = request.params
+    const funcionario = await funcionarioService.getById(id)
 
     return response.render('editar_funcionario', {request: request, funcionario: funcionario})
 })
@@ -86,8 +95,9 @@ routesView.get('/novo_cliente', (request, response) => {
 })
 
 routesView.get('/editar_cliente/:id', async (request, response) => {
-
-    const cliente = await clienteController.getInfo(request, response)
+    
+    const {id} = request.params
+    const cliente = await clienteService.getById(id)
 
     return response.render('editar_cliente', {request: request, cliente: cliente})
 })
