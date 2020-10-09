@@ -4,13 +4,19 @@ import { IProdutosRepository } from '../IProdutosRepository';
 
 export class ProdutosRepository implements IProdutosRepository {
 
-    async getProdutos(): Promise<Produto[]> {
+    async get(): Promise<Produto[]> {
         const produtos : Produto[] = await knex('produtos')
 
         return produtos
     }
 
-    async getProdutosById(id: string): Promise<Produto> {
+    async getById(id: number): Promise<Produto> {
+        const produto : Produto = await knex('produtos').where('id', id).first()
+
+        return produto
+    }
+
+    async getByEntityId(id: string): Promise<Produto> {
         const produto : Produto = await knex('produtos').where('entityId', id).first()
 
         return produto

@@ -16,19 +16,19 @@ export class ServicosService {
     }
 
     async getAll() {
-        const servicos: Servico[] = await this.servicosRepository.getServices()
+        const servicos: Servico[] = await this.servicosRepository.get()
 
         return servicos
     }
 
     async getById(id: string) {
-        const servico: Servico = await this.servicosRepository.getServiceById(id)
+        const servico: Servico = await this.servicosRepository.getByEntityId(id)
 
         return servico
     }
 
     async update(serviceData: ICreateServicoRequestDTO, id: string) {
-        const serviceAlreadyExists = await this.servicosRepository.getServiceById(id);
+        const serviceAlreadyExists = await this.servicosRepository.getByEntityId(id);
 
         if (!serviceAlreadyExists) throw new Error('Serviço não encontrado.');
 
@@ -38,7 +38,7 @@ export class ServicosService {
     }
 
     async delete(id: string) {
-        const serviceAlreadyExists = await this.servicosRepository.getServiceById(id);
+        const serviceAlreadyExists = await this.servicosRepository.getByEntityId(id);
 
         if (!serviceAlreadyExists) throw new Error('Serviço não encontrado.');
 
