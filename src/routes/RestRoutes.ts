@@ -4,7 +4,8 @@ import {
     servicoControler,
     clienteController,
     funcionarioController,
-    produtoControler } from '../controllers'
+    produtoControler, 
+    financesController } from '../controllers'
 
 const routesRest = express.Router()
 
@@ -110,6 +111,11 @@ routesRest.post('/agenda/:id', (request, response) => {
 
 routesRest.delete('/agenda/:id', (request, response) => {
     return agendaController.delete(request, response)
+})
+
+//---------------------Agenda---------------------------
+routesRest.get('/dashboard', (request, response) => {
+    return financesController.get(request, response)
 })
 
 export  { routesRest }

@@ -1,7 +1,7 @@
 import { Agendamento } from "../domain/models/Agendamento";
-import { ICreateAgendamentoRequestDTO } from '../domain/DTO/AgendamentoDTO'
 
 export interface IAgendamentoRepository {
     create(agendamento: Agendamento): Promise<Number[]>;
+    get(): Promise<Agendamento[]>;
     delete(id: string): Promise<void>;
 }

@@ -4,13 +4,19 @@ import { IServicosRepository } from "../IServicosRepository";
 
 export class ServicosRepository implements IServicosRepository {
 
-    async getServices(): Promise<Servico[]> {
+    async get(): Promise<Servico[]> {
         const servicos : Servico[] = await knex('servicos')
 
         return servicos
     }
 
-    async getServiceById(id: string): Promise<Servico> {
+    async getById(id: number): Promise<Servico> {
+        const servico : Servico = await knex('servicos').where('id', id).first()
+        
+        return servico
+    }
+
+    async getByEntityId(id: string): Promise<Servico> {
         const servico : Servico = await knex('servicos').where('entityId', id).first()
 
         return servico

@@ -2,9 +2,12 @@ import { Agendamento } from '../../domain/models/Agendamento'
 import knex from '../../database/connection';
 import { IAgendamentoRepository } from '../IAgendamentoRepository';
 
-export class ProductServiceRepository implements IAgendamentoRepository {
+export class AgendamentoRepository implements IAgendamentoRepository {
 
-
+    async get(): Promise<Agendamento[]> {
+        
+        return await knex('agendamento')
+    }
 
     async create(agendamento: Agendamento): Promise<number[]> {
 

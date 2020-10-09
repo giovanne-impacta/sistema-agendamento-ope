@@ -5,7 +5,7 @@ import { FuncionarioRepository } from '../repositories/implementations/Funcionar
 import { ClienteRepository } from '../repositories/implementations/ClienteRepository'
 import { ServicosRepository } from '../repositories/implementations/ServicosRepository'
 import { ProdutosRepository } from '../repositories/implementations/ProdutosRepository'
-import { ProductServiceRepository } from '../repositories/implementations/AgendamentoRepository'
+import { AgendamentoRepository } from '../repositories/implementations/AgendamentoRepository'
 import { ICreateAgendaRequestDTO } from '../domain/DTO/AgendaDTO';
 import { Agenda } from '../domain/models/Agenda';
 import { Agendamento } from '../domain/models/Agendamento'
@@ -19,7 +19,7 @@ export class AgendaService {
     private customerRepository: IClienteRepository
     private servicosRepository: IServicosRepository
     private productsRepository: IProdutosRepository
-    private productServiceRepository: IAgendamentoRepository
+    private agendamento: IAgendamentoRepository
     constructor ( 
         private agendaRepository: IAgendaRepository
     ){
@@ -27,14 +27,14 @@ export class AgendaService {
         this.customerRepository = new ClienteRepository
         this.servicosRepository = new ServicosRepository
         this.productsRepository = new ProdutosRepository
-        this.productServiceRepository = new ProductServiceRepository
+        this.agendamento = new AgendamentoRepository
     }
 
     async create(data: ICreateAgendaRequestDTO) {
         var customer = await this.customerRepository.getById(data.customerId!)
         var employee = await this.employeeRepository.getById(data.employeeId!)
-        var service = await this.servicosRepository.getServiceById(data.serviceId!)
-        var product = await this.productsRepository.getProdutosById(data.productId!)
+        var service = await this.servicosRepository.getByEntityId(data.serviceId!)
+        var product = await this.productsRepository.getByEntityId(data.productId!)
 
         var date = new Date(parseInt(data.data)).toISOString().replace(/T/, ' ').replace(/\..+/, '')
         var newAgenda = new Agenda({customerId: customer.id, employeeId: employee.id, data: date})
@@ -42,7 +42,7 @@ export class AgendaService {
         var [id] = await this.agendaRepository.create(newAgenda);
 
         var agendamento = new Agendamento({idAgenda: id, idServicos: service.id, idProduto: product.id})
-        await this.productServiceRepository.create(agendamento)
+        await this.agendamento.create(agendamento)
 
     }
 
