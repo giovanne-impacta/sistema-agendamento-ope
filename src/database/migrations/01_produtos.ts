@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<any> {
         table.uuid('entityId').notNullable();
         table.string('description', 30).notNullable();
         table.integer('quantity').notNullable();
-        table.decimal('value').notNullable();
+        table.float('value').notNullable();
         table.dateTime('createdDate').notNullable();
     })
 }
