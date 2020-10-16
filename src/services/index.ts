@@ -3,7 +3,8 @@ import {
     clienteRepository,
     funcionarioRepository,
     servicosRepository,
-    produtosRepository } from '../repositories/implementations'
+    produtosRepository,
+    accountRepository } from '../repositories/implementations'
     
 import { ServicosService } from './ServicosService'
 import { ProdutosService } from './ProdutosService'
@@ -11,6 +12,7 @@ import { ClienteService } from './ClienteService'
 import { FuncionarioService } from './FuncionarioService'
 import { AgendaService } from './AgendaService'
 import { FinancesService } from './FinancesService'
+import { AccountService } from './AccountService'
 
 
 const servicosService = new ServicosService(servicosRepository)
@@ -19,6 +21,7 @@ const clienteService = new ClienteService(clienteRepository)
 const funcionarioService = new FuncionarioService(funcionarioRepository)
 const agendaService = new AgendaService(agendaRepository)
 const financesService = new FinancesService()
+const accountService = new AccountService(accountRepository)
 
 export { 
     servicosService, 
@@ -26,4 +29,5 @@ export {
     clienteService, 
     funcionarioService, 
     agendaService,
-    financesService }
+    financesService,
+    accountService }

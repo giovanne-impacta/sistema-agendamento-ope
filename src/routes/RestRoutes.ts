@@ -5,10 +5,16 @@ import {
     clienteController,
     funcionarioController,
     produtoControler, 
-    financesController } from '../controllers'
+    financesController,
+    accountController } from '../controllers'
 
 const routesRest = express.Router()
 
+//---------------------Account---------------------------
+routesRest.post('/login', (request, response) => {
+    return accountController.login(request, response)
+})
+//---------------------Services---------------------------
 routesRest.post('/prices', (request, response) => {
     return servicoControler.create(request, response)
 })
