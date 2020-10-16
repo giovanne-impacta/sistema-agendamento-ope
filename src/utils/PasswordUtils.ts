@@ -7,12 +7,12 @@ const GenPassHash = (password: string) => {
     return bcrypt.hashSync(password, salt)
 }
 
-const GenToken = async (id: number, email: string) => {
+const GenToken = async (entityId: string, login: string) => {
     const now = Math.floor(Date.now() / 1000)
 
     const userInfo = {
-        id: id,
-        email: email,
+        entityId: entityId,
+        login: login,
         iat: now + (3 * 24 * 60 * 60)
     }
 
