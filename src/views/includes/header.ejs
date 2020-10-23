@@ -43,12 +43,14 @@
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
                                     <button type="button" tabindex="0" class="dropdown-item">Minha Conta</button>
+                                    <div tabindex="-1" class="dropdown-divider"></div>
+                                    <button type="button" tabindex="0" class="dropdown-item" onclick="window.location.href='/logout'">Sair</button>
                                 </div>
                             </div>
                         </div>
                         <div class="widget-content-left  ml-3 header-user-info">
                             <div class="widget-heading">
-                                Vampeta
+                                <%= request.session.data.name %>
                             </div>
                             <div class="widget-subheading">
                                 Ex-futebolista brasileiro
