@@ -18,7 +18,7 @@ const routesView = express.Router()
 
 routesView.use((request, response, next) => {
 
-    if ( request.url !== "/login" && !request.session.isLoggedIn ) {
+    if ( request.url !== "/login" && !request.session?.isLoggedIn ) {
 
         response.redirect("/login")
 
@@ -36,7 +36,7 @@ routesView.get('/login', (request, response) => {
 
 routesView.get('/logout', (request, response) => {
 
-    request.session.destroy()
+    request.session?.destroy((err) => console.log("deslogado"))
 
     response.redirect("/login")
 
