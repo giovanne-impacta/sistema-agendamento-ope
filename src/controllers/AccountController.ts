@@ -7,6 +7,10 @@ export class AccountController {
         private accountService: AccountService,
     ){}
 
+    async show (request: Request, response: Response): Promise<void> {
+        return response.render('login', {request: request})
+    }
+
     async login (request: Request, response: Response): Promise<Response> {
         try {
 
@@ -14,7 +18,19 @@ export class AccountController {
 
             const loginInfo = await this.accountService.login(login, password)
 
-            return response.json( {token: loginInfo} )
+            request.session.isLoggedIn = true
+            request.session.data = {
+
+                name: loginInfo.name
+
+            }
+
+            // return response.json( {token: loginInfo} )
+            return response.json({
+
+                name: loginInfo.name
+
+            })
         }
         catch (err) {
             return response.status(404).json({ message: err.message })

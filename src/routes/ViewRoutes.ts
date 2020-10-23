@@ -4,7 +4,9 @@ import {
     servicoControler,
     clienteController,
     funcionarioController,
-    produtoControler } from '../controllers'
+    produtoControler,
+    accountController, 
+    financesController} from '../controllers'
 
 import { agendaService,
         clienteService,
@@ -14,7 +16,41 @@ import { agendaService,
 
 const routesView = express.Router()
 
+routesView.use((request, response, next) => {
+
+    if ( request.url !== "/login" && !request.session.isLoggedIn ) {
+
+        response.redirect("/login")
+
+    }
+
+    next()
+
+});
+
 //                  STATIC ROUTES
+//---------------------Account---------------------------
+routesView.get('/login', (request, response) => {
+    return accountController.show(request, response)
+})
+
+routesView.get('/logout', (request, response) => {
+
+    request.session = null
+
+    response.redirect("/login")
+
+})
+
+//---------------------Dashboard---------------------------
+routesView.get('/', (request, response) => {
+    response.redirect("/dashboard")
+})
+
+routesView.get('/dashboard', (request, response) => {
+    return financesController.show(request, response)
+})
+
 //---------------------Agendis :)--------------------------
 routesView.get('/agendas', async (request, response) => {
 

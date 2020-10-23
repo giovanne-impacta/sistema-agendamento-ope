@@ -18,7 +18,8 @@ export class AccountService {
 
         if (!pass) throw new Error(errorText)
 
-        return GenToken(user.entityId, user.login)
+        // return GenToken(user.entityId, user.login)
+        return user
 
     }
 }

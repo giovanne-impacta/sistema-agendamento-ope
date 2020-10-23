@@ -10,6 +10,18 @@ import {
 
 const routesRest = express.Router()
 
+routesRest.use((request, response, next) => {
+
+    if ( request.url !== "/login" && !request.session.isLoggedIn ) {
+
+        response.redirect("/login")
+
+    }
+
+    next();
+
+}); 
+
 //---------------------Account---------------------------
 routesRest.post('/login', (request, response) => {
     return accountController.login(request, response)
