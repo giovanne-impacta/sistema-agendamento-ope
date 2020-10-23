@@ -75,6 +75,12 @@
                 let sMessage = "Houve algum erro. Por favor, tente novamente mais tarde.",
                     sClass = "alert-danger"
 
+                if ( !$alert.is(":visible") ) {
+
+                    $alert.appendTo(".card-body")
+
+                }
+
                 $submit.attr("disabled", true)
                 
                 $alert.removeClass("alert-danger").addClass("alert-primary")
@@ -115,12 +121,6 @@
                     $alert.removeClass("alert-primary").addClass(sClass + " show")
                     
                     $alert_span.html(sMessage)
-
-                    if ( !$alert.is(":visible") ) {
-
-                        $alert.appendTo(".card-body")
-
-                    }
 
                 })
 
