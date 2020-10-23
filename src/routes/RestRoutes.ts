@@ -10,6 +10,7 @@ import {
 
 const routesRest = express.Router()
 
+/*
 routesRest.use((request, response, next) => {
 
     if ( request.url !== "/login" && !request.session?.isLoggedIn ) {
@@ -21,7 +22,7 @@ routesRest.use((request, response, next) => {
     next();
 
 }); 
-
+*/
 //---------------------Account---------------------------
 routesRest.post('/login', (request, response) => {
     return accountController.login(request, response)
@@ -132,7 +133,7 @@ routesRest.delete('/agenda/:id', (request, response) => {
 })
 
 //---------------------Agenda---------------------------
-routesRest.get('/dashboard', (request, response) => {
+routesRest.get('/finances', (request, response) => {
     return financesController.get(request, response)
 })
 
