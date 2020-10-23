@@ -36,7 +36,7 @@ routesView.get('/login', (request, response) => {
 
 routesView.get('/logout', (request, response) => {
 
-    request.session = null
+    request.session.destroy()
 
     response.redirect("/login")
 
