@@ -12,7 +12,7 @@ const routesRest = express.Router()
 
 routesRest.use((request, response, next) => {
 
-    if ( request.url !== "/login" && !request.session.isLoggedIn ) {
+    if ( request.url !== "/login" && !request.session?.isLoggedIn ) {
 
         response.redirect("/login")
 
