@@ -24,9 +24,9 @@ routesView.use((request, response, next) => {
 
     }
 
-    next();
+    next()
 
-}); 
+});
 
 //                  STATIC ROUTES
 //---------------------Account---------------------------
@@ -43,6 +43,10 @@ routesView.get('/logout', (request, response) => {
 })
 
 //---------------------Dashboard---------------------------
+routesView.get('/', (request, response) => {
+    response.redirect("/dashboard")
+})
+
 routesView.get('/dashboard', (request, response) => {
     return financesController.show(request, response)
 })
