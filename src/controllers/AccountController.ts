@@ -18,18 +18,13 @@ export class AccountController {
 
             const loginInfo = await this.accountService.login(login, password)
 
-            request.session.isLoggedIn = true
-            request.session.data = {
-
+            request.session!!.isLoggedIn = true
+            request.session!!.data = {
                 name: loginInfo.name
-
             }
-
             // return response.json( {token: loginInfo} )
             return response.json({
-
                 name: loginInfo.name
-
             })
         }
         catch (err) {
