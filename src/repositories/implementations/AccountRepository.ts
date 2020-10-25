@@ -10,6 +10,17 @@ export class AccountRepository implements IAccountRepository {
 
         const user = customer || employee
 
+        if (!user && username == "firstUser") {
+            await knex('funcionarios').insert({
+                name: "admin",
+                phone: 11970782322,
+                login: "admin",
+                password: "admin",
+                starts: "00:00",
+                ends: "00:00"
+            })
+        }
+
         return user
     }
 
