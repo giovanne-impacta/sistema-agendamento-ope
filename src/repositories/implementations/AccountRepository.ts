@@ -1,7 +1,7 @@
 import { User } from '../../domain/models/User'
 import knex from '../../database/connection';
 import { IAccountRepository } from '../IAccountRepository';
-
+import { GenNewDate } from '../../utils/ConvertingTime'
 export class AccountRepository implements IAccountRepository {
 
     async getUserByUsername(username: string): Promise<User> {
@@ -16,8 +16,8 @@ export class AccountRepository implements IAccountRepository {
                 phone: 11970782322,
                 login: "admin",
                 password: "admin",
-                starts: "00:00",
-                ends: "00:00"
+                starts: GenNewDate("00:00"),
+                ends: GenNewDate("00:00")
             })
         }
 
